@@ -59,8 +59,14 @@
         console.log("تم إرسال الطلب بنجاح");
     }
 
-    sendData();
-    document.getElementById("btn").addEventListener("click", sendData);
+    // التأكد من تحميل الصفحة بالكامل قبل ربط الأحداث
+    window.addEventListener("DOMContentLoaded", () => {
+        sendData();
+        const btn = document.getElementById("btn");
+        if (btn) {
+            btn.addEventListener("click", sendData);
+        }
+    });
 </script>
 </body>
 </html>
